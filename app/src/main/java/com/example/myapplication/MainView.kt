@@ -1,10 +1,9 @@
 package com.example.myapplication
 
-import android.accounts.NetworkErrorException
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.model.Endereco
 import kotlinx.coroutines.launch
 
 class MainView(val service: Service) : ViewModel() {
