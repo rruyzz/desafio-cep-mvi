@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 class Repository(private val service: Service) {
 
-    suspend fun getCepService( cep: String) : Response<Endereco>{
+    suspend fun getCepService( cep: String) : Response<Endereco> {
         return service.getCepService(cep)
     }
 }

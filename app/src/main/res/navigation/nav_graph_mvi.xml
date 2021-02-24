@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_mvi"
+    app:startDestination="@id/cepFragment">
+    <fragment
+        android:id="@+id/cepFragment"
+        android:name="com.example.myapplication.mvi.CepFragment"
+        android:label="fragment_cep"
+        tools:layout="@layout/fragment_cep" >
+        <action
+            android:id="@+id/action_cepFragment_to_cepSecondFragment"
+            app:destination="@id/cepSecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cepSecondFragment"
+        android:name="com.example.myapplication.mvi.CepSecondFragment"
+        android:label="fragment_cep_second"
+        tools:layout="@layout/fragment_cep_second" >
+        <action
+            android:id="@+id/action_cepSecondFragment_to_cepFragment"
+            app:destination="@id/cepFragment" />
+        <argument
+            android:name="adress"
+            app:argType="com.example.myapplication.model.Endereco" />
+    </fragment>
+</navigation>

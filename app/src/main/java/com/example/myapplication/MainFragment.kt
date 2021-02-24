@@ -47,10 +47,8 @@ class MainFragment : Fragment() {
 
         viewModel.adress.observe(viewLifecycleOwner, Observer {
             if(adress.value!!.erro == true){
-                progressBar.visibility = View.INVISIBLE
-                textInputLayout3.visibility = View.VISIBLE
-                btn.visibility = View.VISIBLE
-                input.visibility = View.VISIBLE
+                hideLoanding()
+                showViews()
                 errorCep.toast()
             }
             else {
@@ -63,15 +61,13 @@ class MainFragment : Fragment() {
             cep = input.text.toString()
             cep = unMask(cep)
             adress = viewModel.getEndereco(cep)
-            progressBar.visibility = View.VISIBLE
-            textInputLayout3.visibility = View.INVISIBLE
-            btn.visibility = View.INVISIBLE
-            input.visibility = View.INVISIBLE
+            showLoanding()
+            hideViews()
         }
     }
 
     private fun navigate(adress: Endereco) {
-        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(adress)
+        val action = MainFragmentDirections.actionMainFragmentToSecondFragment2(adress)
         findNavController().navigate(action)
     }
 
@@ -109,5 +105,23 @@ class MainFragment : Fragment() {
         return Toast.makeText(context, this.toString(), duration).apply { show() }
     }
 
+    private fun hideLoanding(){
+        progressBar.visibility = View.INVISIBLE
+    }
 
+    private fun showLoanding(){
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideViews(){
+        textInputLayout3.visibility = View.INVISIBLE
+        btn.visibility = View.INVISIBLE
+        input.visibility = View.INVISIBLE
+    }
+
+    private fun showViews(){
+        textInputLayout3.visibility = View.VISIBLE
+        btn.visibility = View.VISIBLE
+        input.visibility = View.VISIBLE
+    }
 }

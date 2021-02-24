@@ -27,16 +27,21 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adress = currentAdress.adresss
-        tvBairro.text = adress.bairro
-        tvCep.text = adress.cep
-        tvLogadouro.text = adress.logradouro
+        putViews()
 
         val callback = object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.action_secondFragment_to_mainFragment)
             }
         }
+
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    private fun putViews(){
+        val adress = currentAdress.adresss
+        tvBairro.text = adress.bairro
+        tvCep.text = adress.cep
+        tvLogadouro.text = adress.logradouro
     }
 }

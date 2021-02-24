@@ -11,9 +11,10 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_secondFragment"
+            android:id="@+id/action_mainFragment_to_secondFragment2"
             app:destination="@id/secondFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.example.myapplication.SecondFragment"
@@ -21,9 +22,10 @@
         tools:layout="@layout/fragment_second">
         <argument
             android:name="adresss"
-            app:argType="com.example.myapplication.Endereco" />
+            app:argType="com.example.myapplication.model.Endereco" />
         <action
             android:id="@+id/action_secondFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+
 </navigation>

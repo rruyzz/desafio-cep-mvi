@@ -63,5 +63,17 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
 
+    //MVI
+    implementation project(path: ':mvi-annotations')
+    implementation project(path: ':mvi-annotations')
+    implementation project(path: ':mvi')
+    implementation project(path: ':mvi')
+
+    // Koin for Android
+    implementation "org.koin:koin-android:2.1.5"
+
+    // Koin Android ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:2.1.5"
+
 
 }
