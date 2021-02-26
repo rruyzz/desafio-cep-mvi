@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.text.isDigitsOnly
 import com.example.mvi.UiStateMachine
 import com.example.myapplication.R
 import com.redmadrobot.inputmask.MaskedTextChangedListener
@@ -41,9 +42,11 @@ class CepFragment : CepMVIFragment() {
         inputmvi.setCepMask()
         cep = inputmvi.text.toString()
         cep = unMask(cep)
-        viewModel.mutate(
-            CepActions.CepRequestAction(cep)
-        )
+        btnmvi.setOnClickListener {
+            viewModel.mutate(
+                CepActions.CepRequestAction(unMask(inputmvi.text.toString()))
+            )
+        }
     }
 
     override fun render(state: CepStates) {
@@ -88,7 +91,9 @@ class CepFragment : CepMVIFragment() {
                 count: Int
             ) {
                 super.onTextChanged(text, cursorPosition, before, count)
-                btn.isEnabled = input.length() == 9
+                if(inputmvi != null){
+                    btnmvi.isEnabled = inputmvi.length() == 9
+                }
             }
         }
         editText.addTextChangedListener(listener)

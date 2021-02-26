@@ -6,8 +6,7 @@ import retrofit2.Response
 
 class Repository(private val service: Service) {
 
-    suspend fun getEnderecoService(cep: String) = service.getEnderecoService(cep)
-//    suspend fun getCepService( cep: String) : Response<CepResponse> {
-//        return service.getCepService(cep)
-//    }
+    suspend fun getCepService( cep: String) : Response<CepResponse> {
+        return service.getEnderecoService(cep)
+    }
 }

@@ -14,7 +14,7 @@ class MainView(val service: Service) : ViewModel() {
     fun getEndereco(cep: String): MutableLiveData<CepResponse> {
         viewModelScope.launch {
             try{
-                adress.value = service.getEnderecoService(cep)
+//                adress.value = service.getEnderecoService(cep)
             }catch (exception: Exception) {
                 Log.e("TAG", exception.message.toString())
             }

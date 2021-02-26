@@ -9,7 +9,7 @@ class CepDispatcher(private val repository: Repository): CepMVIDispatcher()  {
         when (action) {
             is CepActions.CepRequestAction -> {
                 emit(CepResults.Loading)
-                val result = repository.getEnderecoService(action.cep)
+                val result = repository.getCepService(action.cep)
 
 //                when{
 //                    result.hasError->emit(CepResults.ErrorCep(result.message!!))
