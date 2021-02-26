@@ -1,6 +1,6 @@
 package com.example.myapplication
 
-import com.example.myapplication.model.Endereco
+import com.example.myapplication.model.CepResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 interface Service {
     @GET("{cep}/json")
-    suspend fun getEnderecoService( @Path("cep") cep: String) : Endereco
+    suspend fun getEnderecoService( @Path("cep") cep: String) : CepResponse
 }
 
 val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

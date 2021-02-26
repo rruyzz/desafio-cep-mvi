@@ -14,16 +14,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.model.Endereco
+import com.example.myapplication.model.CepResponse
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
-    lateinit var adress: MutableLiveData<Endereco>
+    lateinit var adress: MutableLiveData<CepResponse>
     lateinit var cep: String
-    lateinit var data : Endereco
+    lateinit var data : CepResponse
     private val errorCep = "Cep Invalido"
+    private val nullerror = "null"
 
     private val viewModel by viewModels<MainView> {
         object : ViewModelProvider.Factory {
@@ -38,7 +39,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_main, container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,8 +51,7 @@ class MainFragment : Fragment() {
                 hideLoanding()
                 showViews()
                 errorCep.toast()
-            }
-            else {
+            } else{
                 navigate(adress.value!!)
             }
 
@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun navigate(adress: Endereco) {
+    private fun navigate(adress: CepResponse) {
         val action = MainFragmentDirections.actionMainFragmentToSecondFragment2(adress)
         findNavController().navigate(action)
     }
@@ -110,6 +110,7 @@ class MainFragment : Fragment() {
     }
 
     private fun showLoanding(){
+
         progressBar.visibility = View.VISIBLE
     }
 

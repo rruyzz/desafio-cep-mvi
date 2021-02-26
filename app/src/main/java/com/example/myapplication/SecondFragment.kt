@@ -39,7 +39,7 @@ class SecondFragment : Fragment() {
     }
 
     private fun putViews(){
-        val adress = currentAdress.adresss
+        val adress = currentAdress.adress
         tvBairro.text = adress.bairro
         tvCep.text = adress.cep
         tvLogadouro.text = adress.logradouro

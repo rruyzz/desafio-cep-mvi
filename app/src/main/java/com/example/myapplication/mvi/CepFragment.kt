@@ -23,6 +23,9 @@ class CepFragment : CepMVIFragment() {
     override val uiStateMachine: UiStateMachine<CepStates> get() = viewModel
     private val viewModel : CepViewModel by viewModel()
     lateinit var cep: String
+    private val errorCep = "Error cep"
+    private val successCep = "Success cep"
+    private val sessionExpired = "Session expired"
 
 
     override fun onCreateView(
@@ -55,15 +58,15 @@ class CepFragment : CepMVIFragment() {
     }
 
     private fun renderSucessCep(state: CepStates){
-
+        successCep.toast()
     }
 
     private fun renderErroCep(state: CepStates){
-
+        errorCep.toast()
     }
 
     private fun renderSessionExpired(state: CepStates){
-
+        sessionExpired.toast()
     }
 
     private fun EditText.setCepMask() {

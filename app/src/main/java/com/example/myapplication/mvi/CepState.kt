@@ -8,14 +8,14 @@ import com.example.mvi_annotations.MVIActions
 import com.example.mvi_annotations.MVIResults
 import com.example.mvi_annotations.MVIState
 
-import com.example.myapplication.model.Endereco
+import com.example.myapplication.model.CepResponse
 
 
 @MVIState
 data class CepStates(
     val stateType: StateType? = null,
     val message: String = "",
-    val successCep: Endereco? = null
+    val successCep: CepResponse? = null
 )
 
 @MVIActions
@@ -28,7 +28,7 @@ sealed class CepResults {
     object Loading : CepResults()
     object SessionExpired : CepResults()
 
-    data class SuccessCep(val successCepResult: Endereco) : CepResults()
+    data class SuccessCep(val successCepResult: CepResponse) : CepResults()
     data class ErrorCep(val message: String) : CepResults()
 
 }

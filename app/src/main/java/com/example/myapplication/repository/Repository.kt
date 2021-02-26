@@ -1,13 +1,13 @@
 package com.example.myapplication.repository
 
-import com.example.myapplication.model.Endereco
-import com.example.myapplication.service.Service
+import com.example.myapplication.Service
+import com.example.myapplication.model.CepResponse
 import retrofit2.Response
-import retrofit2.http.Path
 
 class Repository(private val service: Service) {
 
-    suspend fun getCepService( cep: String) : Response<Endereco> {
-        return service.getCepService(cep)
-    }
+    suspend fun getEnderecoService(cep: String) = service.getEnderecoService(cep)
+//    suspend fun getCepService( cep: String) : Response<CepResponse> {
+//        return service.getCepService(cep)
+//    }
 }

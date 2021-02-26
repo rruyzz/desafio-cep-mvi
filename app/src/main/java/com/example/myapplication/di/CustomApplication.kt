@@ -16,11 +16,12 @@ class CustomApplication : Application() {
     }
 
     private fun startKoin(){
-        val appModule = mutableListOf<Module>(module, serviceModule)
+        val appModule = mutableListOf(module)
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@CustomApplication)
             modules(appModule)
+
         }
     }
 }

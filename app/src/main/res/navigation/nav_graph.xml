@@ -20,12 +20,12 @@
         android:name="com.example.myapplication.SecondFragment"
         android:label="fragment_second"
         tools:layout="@layout/fragment_second">
-        <argument
-            android:name="adresss"
-            app:argType="com.example.myapplication.model.Endereco" />
         <action
             android:id="@+id/action_secondFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="adress"
+            app:argType="com.example.myapplication.model.CepResponse" />
     </fragment>
 
 </navigation>

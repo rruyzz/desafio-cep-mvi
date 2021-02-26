@@ -22,7 +22,7 @@
             android:id="@+id/action_cepSecondFragment_to_cepFragment"
             app:destination="@id/cepFragment" />
         <argument
-            android:name="adress"
-            app:argType="com.example.myapplication.model.Endereco" />
+            android:name="address"
+            app:argType="com.example.myapplication.model.CepResponse" />
     </fragment>
 </navigation>
