@@ -67,7 +67,7 @@ class MainFragment : Fragment() {
     }
 
     private fun navigate(adress: CepResponse) {
-        val action = MainFragmentDirections.actionMainFragmentToSecondFragment2(adress)
+        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(adress)
         findNavController().navigate(action)
     }
 

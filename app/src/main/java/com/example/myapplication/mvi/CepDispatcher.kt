@@ -4,19 +4,24 @@ import androidx.lifecycle.LiveDataScope
 
 import com.example.myapplication.repository.Repository
 
-class CepDispatcher(private val repository: Repository): CepMVIDispatcher()  {
+class CepDispatcher(private val repository: Repository) : CepMVIDispatcher() {
     override suspend fun LiveDataScope<CepResults>.handleAction(action: CepActions) {
         when (action) {
             is CepActions.CepRequestAction -> {
                 emit(CepResults.Loading)
                 val result = repository.getCepService(action.cep)
+                when {
+                    result.isSuccessful -> emit(CepResults.SuccessCep(result.body()!!))
+                }
+            }
+
 
 //                when{
 //                    result.hasError->emit(CepResults.ErrorCep(result.message!!))
 //                    result.isSessionExpired -> emit(CepResults.SessionExpired)
 //                    else -> emit(CepResults.SuccessCep(result.response!!))
 //                }
-            }
+
         }
     }
 }

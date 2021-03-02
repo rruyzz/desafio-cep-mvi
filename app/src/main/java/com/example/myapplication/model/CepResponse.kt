@@ -9,7 +9,13 @@ data class CepResponse(
     var logradouro: String,
     var complemento: String,
     var bairro: String,
-    var erro: Boolean
+    var erro: Boolean,
+    var localidade: String,
+    var uf: String,
+    var ibge: Int,
+    var gia: Int,
+    var ddd: Int,
+    var siafi: Int
 //    val localidade: String,
 //    val uf: String,
 //    val ibge: Int,

@@ -2,32 +2,34 @@ package com.example.myapplication.mvi
 
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
+import androidx.navigation.NavArgsLazy
+import androidx.navigation.fragment.findNavController
 import com.example.mvi.UiStateMachine
+import com.example.mvi.core.currentState
 import com.example.myapplication.R
+import com.example.myapplication.model.CepResponse
+import com.example.myapplication.repository.Repository
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kotlinx.android.synthetic.main.fragment_cep.*
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.progressBar
-import kotlinx.android.synthetic.main.fragment_main.textInputLayout3
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Response
 
 
 class CepFragment : CepMVIFragment() {
 
     override val uiStateMachine: UiStateMachine<CepStates> get() = viewModel
-    private val viewModel : CepViewModel by viewModel()
+    private val viewModel: CepViewModel by viewModel()
     lateinit var cep: String
     private val errorCep = "Error cep"
     private val successCep = "Success cep"
     private val sessionExpired = "Session expired"
-
+    lateinit var address: CepResponse
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,26 +52,63 @@ class CepFragment : CepMVIFragment() {
     }
 
     override fun render(state: CepStates) {
-        when(state.stateType){
+        when (state.stateType) {
             is StateType.SuccessCep -> renderSucessCep(state)
             is StateType.ErrorCep -> renderErroCep(state)
             is StateType.SessionExpired -> renderSessionExpired(state)
+            is StateType.Loading -> renderLoadState()
         }
     }
-    private fun setUp(){
 
+    private fun navigation(cepResponse: CepResponse) {
+        val action = CepFragmentDirections.actionCepFragmentToCepSecondFragment(cepResponse)
+        findNavController().navigate(action)
     }
 
-    private fun renderSucessCep(state: CepStates){
-        successCep.toast()
+
+    private fun renderLoadState() {
+        hideViews()
+        progressBarCep.visibility = View.VISIBLE
     }
 
-    private fun renderErroCep(state: CepStates){
+    private fun renderSucessCep(state: CepStates) {
+        hideLoanding()
+        val response: CepResponse = state.successCep!!
+        if (response != null && response.erro == false) {
+            navigation(response)
+        } else if(response.erro == true){
+
+        }
+    }
+
+    private fun renderErroCep(state: CepStates) {
+        showViews()
         errorCep.toast()
     }
 
-    private fun renderSessionExpired(state: CepStates){
+    private fun renderSessionExpired(state: CepStates) {
+        showViews()
         sessionExpired.toast()
+    }
+
+    private fun hideLoanding() {
+        progressBarCep.visibility = View.INVISIBLE
+    }
+
+    private fun showLoanding() {
+        progressBarCep.visibility = View.VISIBLE
+    }
+
+    private fun hideViews() {
+        textInputLayoutMvi.visibility = View.INVISIBLE
+        btnmvi.visibility = View.INVISIBLE
+        inputmvi.visibility = View.INVISIBLE
+    }
+
+    private fun showViews() {
+        textInputLayoutMvi.visibility = View.VISIBLE
+        btnmvi.visibility = View.VISIBLE
+        inputmvi.visibility = View.VISIBLE
     }
 
     private fun EditText.setCepMask() {
@@ -91,7 +130,7 @@ class CepFragment : CepMVIFragment() {
                 count: Int
             ) {
                 super.onTextChanged(text, cursorPosition, before, count)
-                if(inputmvi != null){
+                if (inputmvi != null) {
                     btnmvi.isEnabled = inputmvi.length() == 9
                 }
             }
@@ -106,26 +145,6 @@ class CepFragment : CepMVIFragment() {
 
     private fun Any.toast(duration: Int = Toast.LENGTH_LONG): Toast {
         return Toast.makeText(context, this.toString(), duration).apply { show() }
-    }
-
-    private fun hideLoanding(){
-        progressBarCep.visibility = View.INVISIBLE
-    }
-
-    private fun showLoanding(){
-        progressBarCep.visibility = View.VISIBLE
-    }
-
-    private fun hideViews(){
-        textInputLayoutMvi.visibility = View.INVISIBLE
-        btnmvi.visibility = View.INVISIBLE
-        inputmvi.visibility = View.INVISIBLE
-    }
-
-    private fun showViews(){
-        textInputLayoutMvi.visibility = View.VISIBLE
-        btnmvi.visibility = View.VISIBLE
-        inputmvi.visibility = View.VISIBLE
     }
 
 }

@@ -9,6 +9,7 @@ import com.example.mvi_annotations.MVIResults
 import com.example.mvi_annotations.MVIState
 
 import com.example.myapplication.model.CepResponse
+import retrofit2.Response
 
 
 @MVIState
