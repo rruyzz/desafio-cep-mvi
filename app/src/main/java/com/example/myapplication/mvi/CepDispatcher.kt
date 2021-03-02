@@ -1,6 +1,7 @@
 package com.example.myapplication.mvi
 
 import androidx.lifecycle.LiveDataScope
+import com.example.myapplication.network.RetrofitRequest
 
 import com.example.myapplication.repository.Repository
 
@@ -9,11 +10,20 @@ class CepDispatcher(private val repository: Repository) : CepMVIDispatcher() {
         when (action) {
             is CepActions.CepRequestAction -> {
                 emit(CepResults.Loading)
-                val result = repository.getCepService(action.cep)
+                val result = RetrofitRequest.doRetrofitRequest("getCepService") {
+                    repository.getCepService(action.cep)
+                }
                 when {
-                    result.isSuccessful -> emit(CepResults.SuccessCep(result.body()!!))
+                    result.isSessionExpired -> emit(CepResults.SessionExpired)
+                    result.hasError -> emit(CepResults.ErrorCep(result.message!!))
+                    else -> emit(CepResults.SuccessCep(result.response!!))
+
+//                        result.isSuccessful -> emit(CepResults.SuccessCep(result.body()!!))
+//                    result.errorBody() -> emit(CepResults.ErrorCep())
                 }
             }
+
+        }
 
 
 //                when{
@@ -22,6 +32,5 @@ class CepDispatcher(private val repository: Repository) : CepMVIDispatcher() {
 //                    else -> emit(CepResults.SuccessCep(result.response!!))
 //                }
 
-        }
     }
 }

@@ -10,7 +10,10 @@ object CepReducer {
                 stateType = StateType.SuccessCep,
                 successCep = results.successCepResult
             )
-            is CepResults.ErrorCep -> currentState.copy(stateType = StateType.ErrorCep)
+            is CepResults.ErrorCep -> currentState.copy(
+                stateType = StateType.ErrorCep,
+                message = results.message
+            )
         }
     }
 }

@@ -16,10 +16,4 @@ data class CepResponse(
     var gia: Int,
     var ddd: Int,
     var siafi: Int
-//    val localidade: String,
-//    val uf: String,
-//    val ibge: Int,
-//    val gia: Int,
-//    val ddd: Int,
-//    val siafi: Int
 ) : Parcelable

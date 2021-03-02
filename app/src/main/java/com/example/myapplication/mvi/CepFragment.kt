@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavArgsLazy
 import androidx.navigation.fragment.findNavController
 import com.example.mvi.UiStateMachine
@@ -29,7 +30,7 @@ class CepFragment : CepMVIFragment() {
     private val errorCep = "Error cep"
     private val successCep = "Success cep"
     private val sessionExpired = "Session expired"
-    lateinit var address: CepResponse
+    private val invalidCep = "Cep Invalido"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,15 +61,9 @@ class CepFragment : CepMVIFragment() {
         }
     }
 
-    private fun navigation(cepResponse: CepResponse) {
-        val action = CepFragmentDirections.actionCepFragmentToCepSecondFragment(cepResponse)
-        findNavController().navigate(action)
-    }
-
-
     private fun renderLoadState() {
         hideViews()
-        progressBarCep.visibility = View.VISIBLE
+        showLoanding()
     }
 
     private fun renderSucessCep(state: CepStates) {
@@ -77,12 +72,14 @@ class CepFragment : CepMVIFragment() {
         if (response != null && response.erro == false) {
             navigation(response)
         } else if(response.erro == true){
-
+            invalidCep.toast()
+            showViews()
         }
     }
 
     private fun renderErroCep(state: CepStates) {
         showViews()
+        hideLoanding()
         errorCep.toast()
     }
 
@@ -145,6 +142,11 @@ class CepFragment : CepMVIFragment() {
 
     private fun Any.toast(duration: Int = Toast.LENGTH_LONG): Toast {
         return Toast.makeText(context, this.toString(), duration).apply { show() }
+    }
+
+    private fun navigation(cepResponse: CepResponse) {
+        val action = CepFragmentDirections.actionCepFragmentToCepSecondFragment(cepResponse)
+        findNavController().navigate(action)
     }
 
 }
