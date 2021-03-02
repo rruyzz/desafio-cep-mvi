@@ -21,9 +21,8 @@ object RetrofitRequest : KoinComponent {
             val response = withContext(Dispatchers.IO) { call.invoke() }
             when (response?.code()) {
                 in 200..299 -> RetrofitTreatedRequest(response = response?.body(), isSuccess = true)
-                401 -> RetrofitTreatedRequest(isSessionExpired = true)
-                400 -> {
-                    val errorResponse: ErrorResponse? = Gson().fromJson(response.errorBody()!!.charStream(), type)
+                in 400..401 -> {
+                    val errorResponse: ErrorResponse? = Gson().fromJson(response?.errorBody()!!.charStream(), type)
                     RetrofitTreatedRequest(
                         hasError = true,
                         message = errorResponse?.message ?: UNEXPECTED_ERROR
@@ -43,16 +42,10 @@ object RetrofitRequest : KoinComponent {
 
     data class RetrofitTreatedRequest<T>(
         val response: T? = null,
-        val isSessionExpired: Boolean = false,
         val hasError: Boolean = false,
         val isSuccess: Boolean = false,
         val message: String? = null
     )
-
-    data class NonFatalErrorException(
-        val requestMethod: String,
-        val responseMessage: String?
-    ) : Throwable("Request Method -> $requestMethod\nResponseMessage -> $responseMessage")
 
     data class ErrorResponse(
         val status: Int,

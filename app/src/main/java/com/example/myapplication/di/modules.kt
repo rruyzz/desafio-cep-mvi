@@ -13,7 +13,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val module = module {
-    //single <Service>{ provideRetrofit() }
     factory { Repository(provideRetrofit()) }
     factory{ CepDispatcher(get())}
     viewModel { CepViewModel(get()) }

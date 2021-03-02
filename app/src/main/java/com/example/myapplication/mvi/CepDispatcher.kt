@@ -14,23 +14,10 @@ class CepDispatcher(private val repository: Repository) : CepMVIDispatcher() {
                     repository.getCepService(action.cep)
                 }
                 when {
-                    result.isSessionExpired -> emit(CepResults.SessionExpired)
                     result.hasError -> emit(CepResults.ErrorCep(result.message!!))
                     else -> emit(CepResults.SuccessCep(result.response!!))
-
-//                        result.isSuccessful -> emit(CepResults.SuccessCep(result.body()!!))
-//                    result.errorBody() -> emit(CepResults.ErrorCep())
                 }
             }
-
         }
-
-
-//                when{
-//                    result.hasError->emit(CepResults.ErrorCep(result.message!!))
-//                    result.isSessionExpired -> emit(CepResults.SessionExpired)
-//                    else -> emit(CepResults.SuccessCep(result.response!!))
-//                }
-
     }
 }

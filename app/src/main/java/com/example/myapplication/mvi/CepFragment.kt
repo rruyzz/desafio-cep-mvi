@@ -28,8 +28,6 @@ class CepFragment : CepMVIFragment() {
     private val viewModel: CepViewModel by viewModel()
     lateinit var cep: String
     private val errorCep = "Error cep"
-    private val successCep = "Success cep"
-    private val sessionExpired = "Session expired"
     private val invalidCep = "Cep Invalido"
 
     override fun onCreateView(
@@ -55,9 +53,8 @@ class CepFragment : CepMVIFragment() {
     override fun render(state: CepStates) {
         when (state.stateType) {
             is StateType.SuccessCep -> renderSucessCep(state)
-            is StateType.ErrorCep -> renderErroCep(state)
-            is StateType.SessionExpired -> renderSessionExpired(state)
             is StateType.Loading -> renderLoadState()
+            else -> renderErroCep(state)
         }
     }
 
@@ -81,11 +78,6 @@ class CepFragment : CepMVIFragment() {
         showViews()
         hideLoanding()
         errorCep.toast()
-    }
-
-    private fun renderSessionExpired(state: CepStates) {
-        showViews()
-        sessionExpired.toast()
     }
 
     private fun hideLoanding() {
