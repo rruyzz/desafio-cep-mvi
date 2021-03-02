@@ -27,7 +27,6 @@ class CepFragment : CepMVIFragment() {
     override val uiStateMachine: UiStateMachine<CepStates> get() = viewModel
     private val viewModel: CepViewModel by viewModel()
     lateinit var cep: String
-    private val errorCep = "Error cep"
     private val invalidCep = "Cep Invalido"
 
     override fun onCreateView(
@@ -77,7 +76,7 @@ class CepFragment : CepMVIFragment() {
     private fun renderErroCep(state: CepStates) {
         showViews()
         hideLoanding()
-        errorCep.toast()
+        state.message.toast()
     }
 
     private fun hideLoanding() {

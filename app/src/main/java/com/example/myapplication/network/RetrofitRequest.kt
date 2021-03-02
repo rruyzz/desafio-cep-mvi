@@ -21,11 +21,10 @@ object RetrofitRequest : KoinComponent {
             val response = withContext(Dispatchers.IO) { call.invoke() }
             when (response?.code()) {
                 in 200..299 -> RetrofitTreatedRequest(response = response?.body(), isSuccess = true)
-                in 400..401 -> {
-                    val errorResponse: ErrorResponse? = Gson().fromJson(response?.errorBody()!!.charStream(), type)
+                400 -> {
                     RetrofitTreatedRequest(
                         hasError = true,
-                        message = errorResponse?.message ?: UNEXPECTED_ERROR
+                        message = ERROR_400
                     )
                 }
                 else -> {
@@ -52,5 +51,6 @@ object RetrofitRequest : KoinComponent {
         val message: String
     )
 
+    val ERROR_400 = "Erro 400"
     val UNEXPECTED_ERROR = "Erro inesperado"
 }
